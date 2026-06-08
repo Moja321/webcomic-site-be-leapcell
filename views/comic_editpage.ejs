@@ -1,0 +1,143 @@
+<!-- this page shows a spesific comic and its chapters -->
+<!-- chapters should be in a drop down menu -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%-include("./partials/header.ejs")%>  
+</head>
+<body>
+
+    <h2>Edit comic : <%= editComic["title"] %></h2>
+    
+    <form action="/editcomics/<%=editComic["_id"]%>" method="POST" enctype="multipart/form-data">
+      <label for="title">Title:</label><br>
+      <input type="text" id="title" name="title" value="<%=editComic["title"]%>" required><br>
+
+      <p>Upload thumbnail image for comic here:</p>
+      <input type="file" accept="image/*" id="comicImg" name="comicImg" required><br>
+      <output id="preview"></output>
+      <br/>
+      <p>Current comic thumbnail image:</p>
+      <img src="<%=editComic["mainImg"]%>" width="200px" alt="comic main image"><br>
+      <br/>
+      <label for="synopsis">Synopsis:</label><br>
+      <textarea id="synopsis" name="synopsis" rows="4" cols="50" required><%=editComic["synopsis"]%></textarea><br>
+      
+      <input type="submit" value="Submit edit">
+    </form>
+
+    <br>
+
+    <h2>Add new chapter</h2>
+    <form action="/editcomics/chapters/<%=editComic["_id"]%>" method="POST">
+      <label for="title">Chapter Title:</label><br/>
+      <br/>
+      <input type="text" id="chapterTitle" name="chapterTitle" value="Chapter 1" required><br/>
+      <br/>
+      <input type="submit" value="Add new chapter">
+    </form>
+    <br>
+    <h2>Upload images chapter</h2>
+    <form action="/editcomics/edit-chapters/<%=editComic["_id"]%>" method="POST" enctype="multipart/form-data">
+      <label for="chapters">Choose a comic chapter:</label>
+      <select name="chapters" id="chapters" required>
+        <% if (editComic) for(let i=0; i< locals.editComic.chapters.length; i++){ %>
+
+        <option value="<%= editComic["chapters"][i]["_id"] %>"><%= editComic["chapters"][i]["chapterTitle"] %></option>
+        
+        <%}%>
+      </select>
+      <br/>
+      <br/>
+      <label for="chapterImg">Upload pages (max 10):</label>
+      <br/>
+      <br/>
+      <input type="file" accept="image/*" id="chapterImg" name="chapterImg" multiple><br>
+      <output id="list"></output>
+      <br/>
+      <input type="submit" value="Upload chapter pages">
+      <p><%=locals.errorMsg || "Please upload images for the comic chapter selected"%></p>
+    </form>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <% if (locals.info) { %>
+      <script>
+        var msg = '<%= locals.info %>';
+        window.onload = () =>{
+          setTimeout(function() {
+              alert(msg);
+          }, 100);
+        }
+      </script>
+    <% } %>
+
+    <script>
+
+      function handleFileSelect (evt) {
+
+        //Empty the list element first
+        document.getElementById('list').innerHTML = "";
+
+        // Loop through the FileList and render image files as thumbnails.
+        for (const file of evt.target.files) {
+      
+          // Render thumbnail.
+          const span = document.createElement('span')
+          const src = URL.createObjectURL(file)
+          span.innerHTML = 
+            `<img style="height: 75px; border: 1px solid #000; margin: 5px"` + 
+            `src="${src}" title="${escape(file.name)}">`
+
+          document.getElementById('list').insertBefore(span, null)
+        }
+      }
+
+      document.getElementById('chapterImg').addEventListener('change', handleFileSelect, false);
+
+      function handleFileSelect2 (evt) {
+
+      //Empty the list element first
+      document.getElementById('preview').innerHTML = "";
+
+      // Loop through the FileList and render image files as thumbnails.
+      for (const file of evt.target.files) {
+
+        // Render thumbnail.
+        const span = document.createElement('span')
+        const src = URL.createObjectURL(file)
+        span.innerHTML = 
+          `<img style="width: 200px; border: 1px solid #000; margin: 5px"` + 
+          `src="${src}" title="${escape(file.name)}">`
+
+        document.getElementById('preview').insertBefore(span, null)
+      }
+      }
+
+      document.getElementById('comicImg').addEventListener('change', handleFileSelect2, false);
+
+    </script>
+</body>
+</html>
+
+<!-- <p>Upload image for comic chapter here</p>
+<label for="chapterImg1">Upload page 1:</label>
+<input type="file" accept="image/*" id="chapterImg1" name="chapterImg1" ><br>
+<label for="chapterImg2">Upload page 2:</label>
+<input type="file" accept="image/*" id="chapterImg2" name="chapterImg2" ><br>
+<label for="chapterImg3">Upload page 3:</label>
+<input type="file" accept="image/*" id="chapterImg3" name="chapterImg3" ><br>
+<label for="chapterImg4">Upload page 4:</label>
+<input type="file" accept="image/*" id="chapterImg4" name="chapterImg4" ><br>
+<label for="chapterImg5">Upload page 5:</label>
+<input type="file" accept="image/*" id="chapterImg5" name="chapterImg5" ><br> -->
+
+

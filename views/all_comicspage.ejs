@@ -1,0 +1,27 @@
+<!-- this page will list all the comics available -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%-include("./partials/header.ejs")%>  
+</head>
+<body>
+    <h3>All comics list</h3>
+    <ul>
+        <% if (locals.comicsarr) for(let i=0; i< locals.comicsarr.length; i++){ %>
+            <% if (locals.comicsarr[i]) for(let j=0; j< locals.comicsarr[i].comics.length; j++){ %>
+
+                <li>
+                    <p><%= locals.comicsarr[i].comics[j].title %></p>
+                    <img src="<%= locals.comicsarr[i].comics[j].mainImg%>" width="200px" alt="comic main image"><br>
+                    <p>Synopsis : <%= locals.comicsarr[i].comics[j].synopsis %></p>
+                    <p>Likes : <%= locals.comicsarr[i].comics[j].likes %></p>
+                    <a href="/comics/<%= locals.comicsarr[i].comics[j]._id %>/comic"><button>Go to comic</button></a>
+                </li>
+
+            <%}%>
+        <%}%>
+    </ul>
+</body>
+</html>

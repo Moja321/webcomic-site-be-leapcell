@@ -1,0 +1,73 @@
+<!-- this page will list all the comics available -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%-include("./partials/header.ejs")%>  
+</head>
+<body>
+    <h2><%= locals.comic.title || "none" %></h2>
+    <p>Likes: <%= locals.comic.likes %></p>
+    <% if (locals.loggedInUser)  { 
+        if (locals.userLiked.includes(locals.comic["_id"].toString())) { %>
+            <form action="/comics/<%= locals.userId %>/<%= locals.comic._id %>/unlike" method="post">
+                <input type="submit" value="Unlike comic" />
+             </form>
+        <% } else { %> 
+            <form action="/comics/<%= locals.userId %>/<%= locals.comic._id %>/like" method="post">
+                <input type="submit" value="Like comic" />
+            </form>
+        <% } %>
+    <% } %>
+    <h3>Chapters List:</h3>
+    <form action="/comics/<%= locals.comic._id %>/chapter" method="GET">
+        <label for="chapterid">Choose a comic chapter:</label>
+        <select name="chapterid" id="chapterid" required>
+          <% if (locals.comic) for(let i=0; i< locals.comic.chapters.length; i++){ 
+  
+             if (locals.comic["chapters"][i]["_id"] == locals.chapterId){ %>
+                
+                <option value="<%= locals.comic["chapters"][i]["_id"] %>" selected><%= locals.comic["chapters"][i]["chapterTitle"] %></option>
+            <% } else { %>
+                <option value="<%= locals.comic["chapters"][i]["_id"] %>"><%= locals.comic["chapters"][i]["chapterTitle"] %></option>
+            <% } %>
+          <%}%>
+        </select>
+        <input type="submit" value="Read chapter">
+        <p><%=locals.errorMsg || "Choose a chapter and click 'read chapter' to start reading"%></p>
+    </form>
+
+    <div class="pages-container">
+        <ul class="no-bullets">
+            <% if (locals.chapterid) for (let i=0; i< locals.comic.chapters.length; i++) { %>
+    
+                <% if (locals.comic.chapters[i]._id == locals.chapterid) for (let j=0; j< locals.comic.chapters[i].pageImg.length; j++){ %>
+                    <li>
+                      <!-- <p><%= locals.comic.chapters[i].pageImg[j] %></p> -->
+                      <img src="<%=locals.comic.chapters[i].pageImg[j]%>" class="comic-page" alt="chapter page <%= j+1 %>"> 
+                    </li>
+                <% } 
+    
+             } %>
+            
+        </ul>
+    </div>
+    
+
+    
+    <script>
+
+        //var comic = locals.comic._id;
+
+        function likeComic() {
+            console.log("Like button was clicked");
+        };
+
+        //this logs to the browser instead of the computers/server terminal for some reason
+        document.getElementById('likeButton').addEventListener('click', likeComic);
+
+    </script>
+    
+</body>
+</html>

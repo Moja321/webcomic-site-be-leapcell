@@ -1,0 +1,71 @@
+/* :root {
+  background-color:aquamarine;
+} */
+
+body {
+    background-color: lightblue;
+  }
+  
+  .navcontainer{
+      display:flex;
+      flex-direction: column;
+  }
+  
+  .navtitle {
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      /* position: fixed; */
+      /* bottom: 0;
+      width: 100vw;
+      min-height: 3vh; */
+  }
+  
+  .navlinks {
+      display:flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+  }
+  
+  .navlinks div {
+      padding-left: 10px;
+      padding-right: 10px;
+  }
+  
+  .pages-container{
+      display: flex;
+      flex-direction: column;
+  }
+  
+  ul.no-bullets {
+      list-style-type: none;
+      /* justify-content: center; */
+      /* align-items: center; */
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+  
+    .comic-page{
+      height: 1000px;
+    }
+  
+    @media only screen and (max-width: 600px) {
+      body {
+        background-color: aquamarine;
+      }
+      .comic-page{
+          height:600px;
+      }
+    }
+  
+    @media only screen and (max-width: 400px) {
+      body {
+        background-color: lightgreen;
+      }
+      .comic-page{
+          height:400px;
+      }
+    }

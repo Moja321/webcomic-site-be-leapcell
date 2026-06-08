@@ -1,0 +1,61 @@
+<!-- this page will list all the comics available -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%-include("./partials/header.ejs")%>  
+</head>
+<body>
+    <p>User created: <%= locals.createdUser || "none"  %></p> 
+    <p>List of all comics should be here</p>
+</body>
+</html>
+
+<!-- <option value="volvo">Volvo</option>
+<option value="saab">Saab</option>
+<option value="opel">Opel</option>
+<option value="audi">Audi</option> -->
+
+<!-- <form action="/comics/<%=editComic["_id"]%>" method="POST" enctype="multipart/form-data">
+      <label for="title">Title:</label><br>
+      <input type="text" id="title" name="title" value="<%=editComic["title"]%>" required><br>
+
+      <p>Upload image for comic here</p>
+      <input type="file" accept="image/*" id="comicImg" name="comicImg" required><br>
+      <img src="<%=editComic["mainImg"]%>" width="200px" height="120px" alt="comic main image"><br>
+      <label for="synopsis">Synopsis:</label><br>
+      <textarea id="synopsis" name="synopsis" rows="4" cols="50" required><%=editComic["synopsis"]%></textarea><br>
+      
+      <input type="submit" value="Submit edit">
+    </form> -->
+
+    <!-- <ul>
+        <% if (locals.chapterid) for(let i=0; i< locals.comic.chapters.length; i++){
+
+            if (locals.comic.chapters[i].length !== 0) { 
+                
+                for(let j=0; j< locals.comic.chapters[i].length; j++) { %>
+
+                    <li>
+                        <p>Page<%= j %></p>
+                        <img src="<%=locals.comic.chapters[i].pageImg[j]%>" width="200px" height="120px" alt="chapter page">
+                    </li>
+        
+                <%}
+            }   
+        }%>
+    </ul>     -->
+
+    // <% if (locals.chapterid) { %> 
+        
+    //     <% for (let i=0; i <locals.comic.chapters[0].length;i++) { %>
+    //     <p>Page 1:</p>
+    //     <img src="<%=locals.comic.chapters[0].pageImg[i]%>" width="200px" height="120px" alt="chapter page 1"> 
+    //     <% } 
+    //  } %>
+
+    // <% if (locals.chapterid) { %>      
+    //     <p>Page 1:</p>
+    //     <img src="<%=locals.comic.chapters[5].pageImg[0]%>" width="200px" height="120px" alt="chapter page 1"> 
+    //  <% }  %>

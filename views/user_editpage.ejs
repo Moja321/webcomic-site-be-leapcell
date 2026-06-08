@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%-include("./partials/header.ejs")%>  
+</head>
+<body>
+    <p>Logged in user page of: <%= locals.loggedInUser || "none"  %></p> 
+    <p>This is where users can create or update comics/series</p>
+    <% if (locals.loggedInUser) { %>
+    
+    <h2>Create comic</h2>
+    <form action="/editcomics" method="POST" enctype="multipart/form-data">
+      <label for="title">Title:</label><br>
+      <input type="text" id="title" name="title" value="One Piece" required><br>
+
+      <p>Upload thumbnail image for comic here:</p>
+      <input type="file" accept="image/*" id="comicImg" name="comicImg" required><br>
+      <output id="preview"></output><br/>
+
+      <label for="synopsis">Synopsis:</label><br>
+      <textarea id="synopsis" name="synopsis" rows="4" cols="50" required>blablabla</textarea><br>
+      
+      <input type="submit" value="Submit">
+    </form>
+    <br/>
+    <p>Click on a comic to edit/update</p>
+    <h2>Comics List</h2>
+    <ul>
+        <% if (locals.userComics) for(let i=0; i< locals.userComics.length; i++){ %>
+        <li>
+          <p><%= locals.userComics[i]["title"] %></p>
+          <img src="<%=locals.userComics[i]["mainImg"]%>" width="200px" alt="comic main image">
+          <br/>
+          <br/>
+          <a href="/editcomics/<%=locals.userComics[i]["_id"] %>/edit"><button>EDIT</button></a>
+          <form
+            style="display: inline"
+            action="/editcomics/<%=locals.userComics[i]["_id"] %>?_method=DELETE"
+            method="POST"
+          >
+            <input type="submit" value="DELETE" />
+          </form>
+        </li>
+        <br />
+        <%}%>
+    </ul>
+
+    <% } %>
+
+    <% if (locals.info) { %>
+      <script>
+        var msg = '<%= locals.info %>';
+        window.onload = () =>{
+          setTimeout(function() {
+              alert(msg);
+          }, 100);
+        }
+      </script>
+    <% } %>
+
+    <script>
+
+      function handleFileSelect (evt) {
+
+        //Empty the list element first
+        document.getElementById('preview').innerHTML = "";
+
+        // Loop through the FileList and render image files as thumbnails.
+        for (const file of evt.target.files) {
+      
+          // Render thumbnail.
+          const span = document.createElement('span')
+          const src = URL.createObjectURL(file)
+          span.innerHTML = 
+            `<img style="width: 200px; border: 1px solid #000; margin: 5px"` + 
+            `src="${src}" title="${escape(file.name)}">`
+
+          document.getElementById('preview').insertBefore(span, null)
+        }
+      }
+
+      document.getElementById('comicImg').addEventListener('change', handleFileSelect, false);
+
+    </script>
+</body>
+</html>

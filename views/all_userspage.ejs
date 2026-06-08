@@ -1,0 +1,20 @@
+<!-- this page will list all the comics available -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%-include("./partials/header.ejs")%>  
+</head>
+<body>
+    <h3>All users list</h3>
+    <ul>
+        <% if (locals.users) for(let i=0; i< locals.users.length; i++){ %>
+        <li>
+          <p><%= locals.users[i].username %></p>
+          <a href="/users/<%= locals.users[i]._id %>/usercomics"><button>Go to <%= locals.users[i].username %>'s comics</button></a>
+        </li>
+        <%}%>
+    </ul>
+</body>
+</html>
